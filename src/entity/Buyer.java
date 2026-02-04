@@ -21,3 +21,4 @@ public class Buyer {
         purchases++;
     }
 }
+1
