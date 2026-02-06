@@ -4,17 +4,17 @@ import data.interfaces.IDB;
 import entity.Flower;
 import repositories.FlowerRepository;
 import service.FlowerService;
-import entity.Buyer;
 import java.sql.Connection;
-import java.sql.DriverManager;
 
 public class Main {
     public static void main(String[] args) {
         try {
-            IDB db = new PostgresDB("jdbc:postgresql://localhost:5432",
+            IDB db = PostgresDB.getInstance(
+                    "jdbc:postgresql://localhost:5432",
                     "postgres",
                     "0000",
-                    "FlowerShop");
+                    "FlowerShop"
+            );
 
             Connection conn = db.getConnection();
 
@@ -23,6 +23,8 @@ public class Main {
             FlowerController controller = new FlowerController(service);
 
             controller.start();
+
+            db.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

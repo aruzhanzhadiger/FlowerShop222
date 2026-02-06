@@ -1,7 +1,6 @@
 package repositories;
 
 import entity.Flower;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +8,7 @@ import java.util.List;
 public class FlowerRepository {
     private Connection conn;
 
-    public FlowerRepository(Connection conn) {
-        this.conn = conn;
-    }
+    public FlowerRepository(Connection conn) { this.conn = conn; }
 
     public void addFlower(Flower flower) throws SQLException {
         String sql = "INSERT INTO flowers(name, price, stock) VALUES(?, ?, ?)";
@@ -30,14 +27,15 @@ public class FlowerRepository {
         ResultSet rs = st.executeQuery(sql);
 
         while (rs.next()) {
-            int id = rs.getInt("id");
-            String name = rs.getString("name");
-            double price = rs.getDouble("price");
-            int stock = rs.getInt("stock");
-            flowers.add(new Flower(id, name, price, stock));
+            flowers.add(new Flower( rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getDouble("price"),
+                    rs.getInt("stock")
+            ));
         }
         return flowers;
     }
+
     public Flower getFlowerById(int id) throws SQLException {
         String sql = "SELECT id, name, price, stock FROM flowers WHERE id = ?";
         PreparedStatement ps = conn.prepareStatement(sql);
@@ -63,11 +61,11 @@ public class FlowerRepository {
         ps.executeUpdate();
     }
 
+
     public void deleteFlower(int id) throws SQLException {
-        String sql = "DELETE FROM flowers WHERE id = ?";
+        String sql = "DELETE FROM flowers WHERE flowers.id = ?";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setInt(1, id);
         ps.executeUpdate();
     }
 }
-1

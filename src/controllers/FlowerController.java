@@ -1,13 +1,14 @@
 package controllers;
 
+
 import entity.Buyer;
 import entity.Flower;
+import entity.Role;
 import service.FlowerService;
 
-import java.security.Provider;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
-
 
 public class FlowerController {
     private FlowerService service;
@@ -17,7 +18,7 @@ public class FlowerController {
     public FlowerController(FlowerService service) {
         this.service = service;
         System.out.print("Enter buyer name: ");
-        this.buyer = new Buyer(scanner.nextLine());
+        this.buyer = new Buyer(scanner.nextLine(), Role.BUYER);
     }
 
     public void start() {
@@ -27,7 +28,7 @@ public class FlowerController {
             System.out.println("3. Buy flower");
             System.out.println("4. Delete flower");
             System.out.println("0. Exit");
-            System.out.println("Choose: ");
+            System.out.print("Choose: ");
 
             int cmd = scanner.nextInt();
             scanner.nextLine();
@@ -45,7 +46,6 @@ public class FlowerController {
     }
 
     private void addFlower() throws SQLException {
-        scanner.nextLine();
         System.out.print("Flower name: ");
         String name = scanner.nextLine();
 
@@ -54,14 +54,14 @@ public class FlowerController {
 
         System.out.print("Stock: ");
         int stock = scanner.nextInt();
+        scanner.nextLine();
 
         service.createFlower(new Flower(name, price, stock));
     }
 
-    private void showFlowers() throws SQLException {
-        for (Flower f : service.listFlowers()) {
-            System.out.println(f);
-        }
+    private void showFlowers() {
+        List<Flower> flowers = service.listFlowers();
+        flowers.forEach(System.out::println);
     }
 
     private void buyFlower() throws SQLException {
@@ -72,6 +72,7 @@ public class FlowerController {
 
         System.out.print("Enter quantity: ");
         int qty = scanner.nextInt();
+        scanner.nextLine();
 
         double total = service.buyFlower(buyer, id, qty);
         if (total > 0) {
@@ -81,9 +82,11 @@ public class FlowerController {
 
     private void deleteFlower() throws SQLException {
         showFlowers();
+
         System.out.print("Enter flower ID to delete: ");
         int id = scanner.nextInt();
+        scanner.nextLine();
+
         service.deleteFlower(id);
-        System.out.println("Flower deleted successfully");
     }
 }

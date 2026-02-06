@@ -1,10 +1,12 @@
 package service;
 
+
 import entity.Buyer;
 import entity.Flower;
 import repositories.FlowerRepository;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FlowerService {
@@ -15,15 +17,24 @@ public class FlowerService {
     }
 
     public void createFlower(Flower flower) throws SQLException {
-        if (flower.getPrice() == 0) {
+        if (flower.getPrice() <= 0) {
             System.out.println("Price must be more than 0");
             return;
         }
         repo.addFlower(flower);
     }
 
-    public List<Flower> listFlowers() throws SQLException {
-        return repo.getALLFlowers();
+    public List<Flower> listFlowers() {
+        try {
+            return repo.getALLFlowers();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public Flower getFlowerById(int id) throws SQLException {
+        return repo.getFlowerById(id);
     }
 
     public double buyFlower(Buyer buyer, int flowerId, int quantity) throws SQLException {
@@ -52,7 +63,11 @@ public class FlowerService {
     }
 
     public void deleteFlower(int id) throws SQLException {
+        Flower flower = repo.getFlowerById(id);
+        if (flower == null) {
+            System.out.println("Flower with this ID does not exist.");
+            return;
+        }
         repo.deleteFlower(id);
     }
 }
-
