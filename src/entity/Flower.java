@@ -1,6 +1,5 @@
 package entity;
 
-
 public class Flower {
     private int id;
     private String name;
