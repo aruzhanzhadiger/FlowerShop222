@@ -3,6 +3,7 @@ package entity;
 public class Buyer {
     private String name;
     private Role role;
+    private String password;
     private int purchases;
 
 
@@ -18,6 +19,10 @@ public class Buyer {
 
     public Role getRole() {
         return role;
+    }
+
+    public boolean checkPassword(String input) {
+        return password != null && password.equals(input);
     }
 
     public int getPurchases() {

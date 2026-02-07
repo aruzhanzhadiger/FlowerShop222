@@ -1,9 +1,10 @@
 import controllers.FlowerController;
 import data.PostgresDB;
 import data.interfaces.IDB;
-import entity.Flower;
+import repositories.CategoryRepository;
 import repositories.FlowerRepository;
 import service.FlowerService;
+
 import java.sql.Connection;
 
 public class Main {
@@ -18,9 +19,11 @@ public class Main {
 
             Connection conn = db.getConnection();
 
-            FlowerRepository repo = new FlowerRepository(conn);
-            FlowerService service = new FlowerService(repo);
-            FlowerController controller = new FlowerController(service);
+            FlowerRepository flowerRepo = new FlowerRepository(conn);
+            CategoryRepository categoryRepo = new CategoryRepository(conn);
+
+            FlowerService service = new FlowerService(flowerRepo);
+            FlowerController controller = new FlowerController(service, categoryRepo);
 
             controller.start();
 

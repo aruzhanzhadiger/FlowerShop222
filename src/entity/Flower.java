@@ -22,10 +22,7 @@ public class Flower {
         this.category = category;
     }
 
-    public Flower(int id, String name, double price, int stock) {
-    }
-
-    public Flower(String name, double price, int stock) {
+    public Flower(int flowerId, String name, double price, int i) {
     }
 
     public int getId() {
@@ -54,6 +51,7 @@ public class Flower {
 
     @Override
     public String toString() {
-        return id + ". " + name + " (" + category.getName() + ") - " + price + " tg, Stock: " + stock;
+        String cat = (category == null) ? "NoCategory" : category.getName();
+        return id + ". " + name + " (" + cat + ") - " + price + " tg, Stock: " + stock;
     }
 }
