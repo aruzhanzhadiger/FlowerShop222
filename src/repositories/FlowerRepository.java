@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FlowerRepository {
+public class FlowerRepository implements IFR {
     private final Connection conn;
 
     public FlowerRepository(Connection conn) {

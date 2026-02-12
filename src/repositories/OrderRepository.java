@@ -11,7 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderRepository {
+public class OrderRepository implements IOR {
     private Connection conn;
 
     public OrderRepository(Connection conn) {

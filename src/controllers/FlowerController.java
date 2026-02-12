@@ -157,6 +157,7 @@ public class FlowerController {
     private boolean isAdmin() {
         return currentUser.getRole() == Role.ADMIN;
     }
+
     private int readIntSafe() {
         while (!scanner.hasNextInt()) {
             System.out.print("Enter a valid integer: ");

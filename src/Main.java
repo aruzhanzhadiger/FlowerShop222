@@ -4,7 +4,6 @@ import data.interfaces.IDB;
 import repositories.CategoryRepository;
 import repositories.FlowerRepository;
 import service.FlowerService;
-
 import java.sql.Connection;
 
 public class Main {
